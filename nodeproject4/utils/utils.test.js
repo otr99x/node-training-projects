@@ -26,26 +26,26 @@ function Car(){
 
 }
 
-// it('should expect some value', () => {
-//
-//   expect({
-//     name: "joe",
-//     age: 50,
-//   }).toEqual({
-//     name: "joe",
-//     age: 50,
-//   });
-//
-//   expect({
-//     name: "joe",
-//     age: 50,
-//   }).toBe({
-//     name: "joe",
-//     age: 50,
-//   });
-//
-//
-// });
+it('should expect some value', () => {
+
+  expect({
+    name: "joe",
+    age: 50,
+  }).toEqual({
+    name: "joe",
+    age: 50,
+  });
+
+  expect({
+    name: "joe",
+    age: 50,
+  }).toNotBe({
+    name: "joe",
+    age: 50,
+  });
+
+
+});
 
 it('should verify first and last names are set', () => {
   var user = utils.setName({
@@ -56,5 +56,19 @@ it('should verify first and last names are set', () => {
   expect(user).toInclude({
     firstname: 'Joe',
     lastname: 'Cheung',
+  });
+});
+
+it('should async add 2 numbers', (done) => {
+  utils.asyncAdd(2,3, (sum) => {
+    expect(sum).toBe(5).toBeA('number');
+    done();
+  });
+});
+
+it('should async square 2 numbers', (done) => {
+  utils.asyncSquare(5, (square) => {
+    expect(square).toBe(25).toBeA('number');
+    done();
   });
 });
