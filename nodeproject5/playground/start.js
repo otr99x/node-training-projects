@@ -1,4 +1,2 @@
-var dummy = require('./dummylib.js');
- var dummyobj = dummy();
- dummyobj.init('some data');
- dummyobj.read();
+var data = require('./dummylib.js')('some test data');
+console.log(data());
