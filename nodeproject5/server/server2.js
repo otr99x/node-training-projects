@@ -7,6 +7,8 @@ var User = require('./models/user.js')(mongoose);
 var {Car} = require('./models/car.js');
 var {ObjectID} = require('mongodb');
 
+var port = process.env.PORT || 3000;
+
 var app = express();
 
 app.use(bodyParser.json());
@@ -53,6 +55,6 @@ app.get('/todos/:id', (req, res) => {
   }
 });
 
-app.listen(3000, () => {
-  console.log('listening on port 3000');
+app.listen(port, () => {
+  console.log(`listening on port ${port}`);
 });
