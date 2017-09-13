@@ -5,6 +5,7 @@ var {mongoose} = require('./db/mongoose.js');
 var Todo = require('./models/todo.js')(mongoose);
 var User = require('./models/user.js')(mongoose);
 var {Car} = require('./models/car.js');
+var {ObjectID} = require('mongodb');
 
 var app = express();
 
@@ -32,6 +33,24 @@ app.post('/cars', (req, res) => {
   }, (e) => {
     res.status(400).send(e);
   });
+});
+
+app.get('/todos/:id', (req, res) => {
+  var id = req.params.id;
+  if(!ObjectID.isValid(id)){
+    console.log('invalid id');
+    return res.status(404).send();
+  }else{
+    Todo.findById(id).then((todo) => {
+      if(!todo){
+        return res.status(404).send();
+      }else{
+        res.send({todo});
+      }
+    }).catch((e) => {
+      res.status(400).send();
+    });
+  }
 });
 
 app.listen(3000, () => {
