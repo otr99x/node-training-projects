@@ -13,6 +13,17 @@ var app = express();
 
 app.use(bodyParser.json());
 
+app.get('/todos', (req,res) => {
+  Todo.find().then((todos) => {
+    res.send({
+      todos: todos,
+      message: 'retrieved successfully',
+    });
+  }).catch((e) => {
+    res.status(404).send(e);
+  });
+});
+
 app.post('/todos', (req, res) => {
   var todo = new Todo({
     text: req.body.text,
@@ -51,6 +62,23 @@ app.get('/todos/:id', (req, res) => {
       }
     }).catch((e) => {
       res.status(400).send();
+    });
+  }
+});
+
+app.delete('/todos/:id', (req,res) => {
+  var id = req.params.id;
+  if(!ObjectID.isValid(id)){
+    console.log('invalid id');
+    return res.status(404).send('invalid id');
+  }else{
+    Todo.findByIdAndRemove(id).then((todo) => {
+      res.send({
+         message: 'item removed',
+         item: todo,
+       });
+    }).catch((e) => {
+      res.status(404).send(e);
     });
   }
 });
